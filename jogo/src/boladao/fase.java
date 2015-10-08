@@ -47,7 +47,8 @@ public class fase extends JPanel implements ActionListener {
 	private List<Inimigo> inimigos;
 	private List<Circulo> inimigos1;
 	private long init, fim, init1, fim1;
-	private boolean teste, teste2, teste3, teste4;
+	private boolean teste, teste2, teste4, gameover;
+	private boolean teste3 = true;
 	int pontos = 0;
 
 	public static boolean isEmJogo() {
@@ -63,7 +64,7 @@ public class fase extends JPanel implements ActionListener {
 		setFocusable(true);
 		addKeyListener(new TecladoAdapter());
 		ImageIcon referencia = new ImageIcon("res\\sky.png");
-		ImageIcon referencia1 = new ImageIcon("res\\space.gif");
+		ImageIcon referencia1 = new ImageIcon("res\\nivel1.png");
 		ImageIcon referencia2 = new ImageIcon("res\\space.gif");
 		ImageIcon referencia3 = new ImageIcon("res\\space.gif");
 		ImageIcon referencia4 = new ImageIcon("res\\gato.png");
@@ -73,7 +74,6 @@ public class fase extends JPanel implements ActionListener {
 		fundo3 = referencia3.getImage();
 		inicio = referencia4.getImage();
 		naves = new nave();
-		setEmJogo(true);
 		inicializaInimigos();
 		timer = new Timer(5, this);
 		timer.start();
@@ -98,12 +98,33 @@ public class fase extends JPanel implements ActionListener {
 
 		Graphics2D graficos = (Graphics2D) g;
 
+		if (teste3 == true) {
+			graficos.drawImage(fundo1, 0, 0, null);
+			if (teste4 == false) {
+				init1 = System.currentTimeMillis();
+				teste4 = true;
+			}
+
+			if (teste4 == true) {
+				fim1 = System.currentTimeMillis();
+				if (fim1 - init1 >= 4000.0) {
+					g.dispose();
+					teste3 = false;
+					teste4 = false;
+					setEmJogo(true);
+				} else {
+					fim1 = System.currentTimeMillis();
+				}
+
+			}
+		}
+
 		if (isEmJogo()) {
 
 			graficos.drawImage(fundo, 0, 0, null);
-			//graficos.drawImage(fundo1, 498, 0, null);
-			//graficos.drawImage(fundo2, 0, 574, null);
-			//graficos.drawImage(fundo3, 498, 574, null);
+			// graficos.drawImage(fundo1, 498, 0, null);
+			// graficos.drawImage(fundo2, 0, 574, null);
+			// graficos.drawImage(fundo3, 498, 574, null);
 			graficos.drawImage(naves.getImagem(), naves.getX(), naves.getY(), this);
 			List<missel> misseis = naves.getMisseis();
 
@@ -123,14 +144,15 @@ public class fase extends JPanel implements ActionListener {
 				graficos.drawImage(in1.getImagem(), in1.getX(), in1.getY(), this);
 
 			}
-			graficos.setFont(new Font("ARIAL", Font.PLAIN, 20));
+			graficos.setFont(new Font("SPACEMAN", Font.PLAIN, 20));
 			graficos.setColor(Color.RED);
 			graficos.drawString("INIMIGOS: " + controle + controle1, 100, 20);
 			graficos.setColor(Color.GREEN);
 			graficos.drawString("PONTOS: " + pontos, 400, 20);
+			graficos.setFont(new Font("SPACEMAN", Font.PLAIN, 100));
 
 			if (passou == true) {
-				graficos.setFont(new Font("SPACEMAN", Font.PLAIN, 100));
+
 				graficos.setColor(Color.BLUE);
 				graficos.drawString("NIVEL " + nivel, 300, 200);
 				teste = true;
@@ -156,11 +178,11 @@ public class fase extends JPanel implements ActionListener {
 
 			}
 
-		} else {
+		} else if (gameover) {
 
 			// ImageIcon end = new ImageIcon("res\\gameover.jpg");
 			// graficos.drawImage(end.getImage(), 0, 0, null);
-			
+
 			graficos.setFont(new Font("SPACEMAN", Font.PLAIN, 50));
 			graficos.setColor(Color.RED);
 			graficos.drawString("VOCE MATOU: " + pontos, 100, 300);
@@ -174,11 +196,11 @@ public class fase extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 
-		if ((inimigos.size() == 0) && (inimigos1.size() == 0)) {
+		if (inimigos.size() == 0) {
 
 			nivel += 1;
 			controle += 1;
-			controle1 += 1;
+
 			passou = true;
 			inicializaInimigos();
 
@@ -246,6 +268,7 @@ public class fase extends JPanel implements ActionListener {
 				naves.setVisivel(false);
 				tempInimigo.setVisivel(false);
 				setEmJogo(false);
+				gameover = true;
 			}
 		}
 
@@ -257,6 +280,7 @@ public class fase extends JPanel implements ActionListener {
 				naves.setVisivel(false);
 				tempInimigo.setVisivel(false);
 				setEmJogo(false);
+				gameover = true;
 			}
 		}
 
@@ -277,19 +301,8 @@ public class fase extends JPanel implements ActionListener {
 				}
 			}
 
-			for (int j = 0; j < inimigos1.size(); j++) {
-				Circulo tempInimigo = inimigos1.get(j);
-				formaInimigo = tempInimigo.getBounds();
-				if (formaMissel.intersects((formaInimigo))) {
-
-					tempInimigo.setVisivel(false);
-					tempMissel.setVisivel(false);
-
-					pontos += 1;
-				}
-			}
-
 		}
+
 	}
 
 	private class TecladoAdapter extends KeyAdapter {

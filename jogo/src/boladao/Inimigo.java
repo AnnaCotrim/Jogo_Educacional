@@ -20,7 +20,7 @@ public class Inimigo {
 		this.x = x;
 		this.y = y;
 
-		ImageIcon referencia = new ImageIcon("res\\enemy1.gif");
+		ImageIcon referencia = new ImageIcon("res\\triangulo.png");
 		imagem = referencia.getImage();
 
 		this.largura = imagem.getWidth(null);
