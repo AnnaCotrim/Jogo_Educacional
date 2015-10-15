@@ -31,7 +31,7 @@ public class fase extends JPanel implements ActionListener {
 	private nave naves;
 	static int nivel = 1;
 	private Timer timer;
-	private int controle = 10;
+	private int controle = 5;
 	private int controle1 = 5;
 
 	private int[][] triangulos = { { 1880, 239 }, { 1790, 259 }, { 1760, 150 }, { 1790, 150 }, { 1980, 209 },
@@ -42,12 +42,17 @@ public class fase extends JPanel implements ActionListener {
 			{ 1790, 259 }, { 1760, 150 }, { 1790, 150 }, { 1980, 209 }, { 1560, 500 }, { 1510, 70 }, { 1930, 159 },
 			{ 1590, 80 }, { 1530, 60 }, { 1940, 259 }, { 1990, 430 }, { 1920, 200 }, { 1900, 259 }, };
 
+	private int[][] quadrado = { { 2380, 29 }, { 2600, 59 }, { 1380, 89 }, { 1780, 109 }, { 1580, 139 }, { 1880, 239 },
+			{ 1790, 259 }, { 1760, 150 }, { 1790, 150 }, { 1980, 209 }, { 1560, 500 }, { 1510, 70 }, { 1930, 159 },
+			{ 1590, 80 }, { 1530, 60 }, { 1940, 259 }, { 1990, 430 }, { 1920, 200 }, { 1900, 259 }, };
+
 	private static boolean emJogo;
 	private boolean passou;
-	private List<Inimigo> inimigos;
+	private List<Triangulo> inimigos;
 	private List<Circulo> inimigos1;
+	private List<Quadrado> inimigos2;
 	private long init, fim, init1, fim1;
-	private boolean teste, teste2, teste4, gameover,triangulo,circulo;
+	private boolean teste, teste2, teste4, gameover, triangulo, circulo;
 	private boolean teste3 = true;
 	private boolean nivel2;
 	int pontos = 0;
@@ -82,9 +87,9 @@ public class fase extends JPanel implements ActionListener {
 	}
 
 	public void inicializaInimigos() {
-		inimigos = new ArrayList<Inimigo>();
+		inimigos = new ArrayList<Triangulo>();
 		for (int i = 0; i < controle; i++) {
-			inimigos.add(new Inimigo(triangulos[i][0], triangulos[i][1]));
+			inimigos.add(new Triangulo(triangulos[i][0], triangulos[i][1]));
 
 		}
 
@@ -92,6 +97,11 @@ public class fase extends JPanel implements ActionListener {
 		for (int i = 0; i < controle1; i++) {
 			inimigos1.add(new Circulo(circulos[i][0], circulos[i][1]));
 		}
+
+		/*
+		 * inimigos2 = new ArrayList<Quadrado>(); for (int i = 0; i < controle1;
+		 * i++) { inimigos2.add(new Quadrado(quadrado[i][0], quadrado[i][1])); }
+		 */
 
 	}
 
@@ -102,9 +112,9 @@ public class fase extends JPanel implements ActionListener {
 		if (teste3 == true) {
 			if (nivel2 == false)
 				graficos.drawImage(fundo1, 0, 0, null);
-			if (nivel2 == true){
+			if (nivel2 == true) {
 				graficos.drawImage(inicio, 0, 0, null);
-				
+
 			}
 
 			if (teste4 == false) {
@@ -114,14 +124,14 @@ public class fase extends JPanel implements ActionListener {
 
 			if (teste4 == true) {
 				fim1 = System.currentTimeMillis();
-				if (fim1 - init1 >= 4000.0) {
+				if (fim1 - init1 >= 3000.0) {
 					g.dispose();
 					teste3 = false;
 					teste4 = false;
-					if (nivel2 == false){
+					if (nivel2 == false) {
 						setEmJogo(true);
 					}
-					if (nivel2 == true){
+					if (nivel2 == true) {
 						g.dispose();
 						setEmJogo(false);
 					}
@@ -147,7 +157,7 @@ public class fase extends JPanel implements ActionListener {
 			}
 
 			for (int i = 0; i < inimigos.size(); i++) {
-				Inimigo in = inimigos.get(i);
+				Triangulo in = inimigos.get(i);
 				graficos.drawImage(in.getImagem(), in.getX(), in.getY(), this);
 
 			}
@@ -157,16 +167,22 @@ public class fase extends JPanel implements ActionListener {
 				graficos.drawImage(in1.getImagem(), in1.getX(), in1.getY(), this);
 
 			}
-			graficos.setFont(new Font("SPACEMAN", Font.PLAIN, 20));
-			graficos.setColor(Color.RED);
-			graficos.drawString("INIMIGOS: " + controle + controle1, 100, 20);
+
+			/*
+			 * for (int i = 0; i < inimigos2.size(); i++) { Quadrado in1 =
+			 * inimigos2.get(i); graficos.drawImage(in1.getImagem(), in1.getX(),
+			 * in1.getY(), this);
+			 * 
+			 * }
+			 */
+			graficos.setFont(new Font("DK Petit Four", Font.PLAIN, 30));
 			graficos.setColor(Color.GREEN);
-			graficos.drawString("PONTOS: " + pontos, 400, 20);
-			graficos.setFont(new Font("SPACEMAN", Font.PLAIN, 80));
+			graficos.drawString("PONTOS: " + pontos, 400, 40);
+			graficos.setFont(new Font("DK Petit Four", Font.PLAIN, 100));
 
 			if (passou == true) {
 
-				graficos.setColor(Color.BLUE);
+				graficos.setColor(Color.DARK_GRAY);
 				graficos.drawString("BATERIA " + nivel, 300, 200);
 				teste = true;
 				if (teste == true) {
@@ -191,15 +207,14 @@ public class fase extends JPanel implements ActionListener {
 
 			}
 
-			
-
 		} else if (gameover) {
 
-			//ImageIcon end = new ImageIcon("res\\gameover.jpg");
-			//graficos.drawImage(end.getImage(), 0, 0, null);
-			graficos.setFont(new Font("SPACEMAN", Font.PLAIN, 50));
+			// ImageIcon end = new ImageIcon("res\\gameover.jpg");
+			// graficos.drawImage(end.getImage(), 0, 0, null);
+			
+			graficos.setFont(new Font("DK Petit Four", Font.PLAIN, 100));
 			graficos.setColor(Color.RED);
-			graficos.drawString("VOCE MATOU: " + pontos, 100, 300);
+			graficos.drawString("VOCE ACERTOU: " + pontos, 100, 300);
 
 		}
 
@@ -210,19 +225,19 @@ public class fase extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 
-		if (inimigos.size() == 0) {
+		if ((inimigos.size() == 0) || (inimigos1.size() == 0)) {
 
 			nivel += 1;
 			controle += 1;
 			passou = true;
 			inicializaInimigos();
 
-			if (nivel >= 2) {
-				nivel2 = true;
-				teste3 = true;
-				Inimigo.VELOCIDADE += 1;
+			if (nivel >= 5) {
+				// nivel2 = true;
+				// teste3 = true;
+				Triangulo.VELOCIDADE += 1;
 				Circulo.VELOCIDADE += 1;
-				
+
 			}
 			if (controle >= 13) {
 				controle = 13;
@@ -246,7 +261,7 @@ public class fase extends JPanel implements ActionListener {
 		}
 
 		for (int i = 0; i < inimigos.size(); i++) {
-			Inimigo in = inimigos.get(i);
+			Triangulo in = inimigos.get(i);
 			if (in.isVisivel()) {
 				in.mexer();
 			} else {
@@ -254,6 +269,14 @@ public class fase extends JPanel implements ActionListener {
 			}
 
 		}
+
+		/*
+		 * for (int i = 0; i < inimigos2.size(); i++) { Quadrado in =
+		 * inimigos2.get(i); if (in.isVisivel()) { in.mexer(); } else {
+		 * inimigos2.remove(i); }
+		 * 
+		 * }
+		 */
 
 		for (int i = 0; i < inimigos1.size(); i++) {
 			Circulo in1 = inimigos1.get(i);
@@ -275,9 +298,10 @@ public class fase extends JPanel implements ActionListener {
 		Rectangle formaInimigo;
 		Rectangle formaMissel;
 		Rectangle formaCirculo;
+		Rectangle formaQuadrado;
 
 		for (int i = 0; i < inimigos.size(); i++) {
-			Inimigo tempInimigo = inimigos.get(i);
+			Triangulo tempInimigo = inimigos.get(i);
 			formaInimigo = tempInimigo.getBounds();
 
 			if (formaNave.intersects(formaInimigo)) {
@@ -300,23 +324,54 @@ public class fase extends JPanel implements ActionListener {
 			}
 		}
 
+		/*
+		 * for (int i = 0; i < inimigos2.size(); i++) { Quadrado tempInimigo =
+		 * inimigos2.get(i); formaQuadrado = tempInimigo.getBounds();
+		 * 
+		 * if (formaNave.intersects(formaQuadrado)) { naves.setVisivel(false);
+		 * tempInimigo.setVisivel(false); setEmJogo(false); gameover = true; } }
+		 */
+
 		List<missel> misseis = naves.getMisseis();
 		for (int i = 0; i < misseis.size(); i++) {
 			missel tempMissel = misseis.get(i);
 			formaMissel = tempMissel.getBounds();
 
 			for (int j = 0; j < inimigos.size(); j++) {
-				Inimigo tempInimigo = inimigos.get(j);
+				Triangulo tempInimigo = inimigos.get(j);
 				formaInimigo = tempInimigo.getBounds();
 				if (formaMissel.intersects((formaInimigo))) {
+					if (nivel <= 3) {
+						tempInimigo.setVisivel(false);
+						tempMissel.setVisivel(false);
 
-					tempInimigo.setVisivel(false);
-					tempMissel.setVisivel(false);
+						pontos += 1;
+					} else if (nivel > 3) {
+						tempInimigo.setVisivel(true);
+						tempMissel.setVisivel(true);
+					}
 
-					pontos += 1;
 				}
 			}
 
+			for (int j = 0; j < inimigos1.size(); j++) {
+				Circulo tempInimigo = inimigos1.get(j);
+				formaInimigo = tempInimigo.getBounds();
+				if (formaMissel.intersects((formaInimigo))) {
+
+					if (nivel > 3) {
+						tempInimigo.setVisivel(false);
+						tempMissel.setVisivel(false);
+
+						pontos += 1;
+					} else if (nivel < 3) {
+						tempInimigo.setVisivel(true);
+						tempMissel.setVisivel(true);
+					}
+
+				}
+
+			}
 		}
 
 	}

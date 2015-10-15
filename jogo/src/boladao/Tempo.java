@@ -24,7 +24,7 @@ public class Tempo {
 					teste1 = false;
 					if (fase.nivel > 5) {
 						fase.setEmJogo(false);
-						fase.paint();
+						
 					}
 
 				} else {

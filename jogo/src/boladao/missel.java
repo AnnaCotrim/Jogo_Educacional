@@ -13,7 +13,7 @@ public class missel {
 	private boolean isVisivel;
 	
 	private static final int LARGURA_TELA = 1200;
-	private static final int VELOCIDADE = 4;
+	private static final int VELOCIDADE = 3;
 	
 	public missel(int x, int y)
 	{
