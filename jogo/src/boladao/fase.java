@@ -29,14 +29,14 @@ public class fase extends JPanel implements ActionListener {
 	private Image fundo3;
 	private Image inicio;
 	private nave naves;
-	private int nivel = 1;
+	static int nivel = 1;
 	private Timer timer;
-	private int controle = 5;
+	private int controle = 10;
 	private int controle1 = 5;
 
 	private int[][] triangulos = { { 1880, 239 }, { 1790, 259 }, { 1760, 150 }, { 1790, 150 }, { 1980, 209 },
-			{ 1560, 470 }, { 1510, 70 }, { 1700, 330 }, { 1920, 300 }, { 1856, 328 }, { 1456, 320 }, { 1800, 480 },
-			{ 3200, 421 }, { 2400, 320 }, };
+			{ 1560, 390 }, { 1510, 70 }, { 1700, 330 }, { 1920, 300 }, { 1856, 328 }, { 1456, 320 }, { 1800, 400 },
+			{ 3200, 221 }, { 2400, 320 }, };
 
 	private int[][] circulos = { { 2380, 29 }, { 2600, 59 }, { 1380, 89 }, { 1780, 109 }, { 1580, 139 }, { 1880, 239 },
 			{ 1790, 259 }, { 1760, 150 }, { 1790, 150 }, { 1980, 209 }, { 1560, 500 }, { 1510, 70 }, { 1930, 159 },
@@ -47,16 +47,17 @@ public class fase extends JPanel implements ActionListener {
 	private List<Inimigo> inimigos;
 	private List<Circulo> inimigos1;
 	private long init, fim, init1, fim1;
-	private boolean teste, teste2, teste4, gameover;
+	private boolean teste, teste2, teste4, gameover,triangulo,circulo;
 	private boolean teste3 = true;
+	private boolean nivel2;
 	int pontos = 0;
 
 	public static boolean isEmJogo() {
 		return emJogo;
 	}
 
-	public void setEmJogo(boolean emJogo) {
-		this.emJogo = emJogo;
+	public static void setEmJogo(boolean emJogo) {
+		fase.emJogo = emJogo;
 	}
 
 	public fase() {
@@ -67,7 +68,7 @@ public class fase extends JPanel implements ActionListener {
 		ImageIcon referencia1 = new ImageIcon("res\\nivel1.png");
 		ImageIcon referencia2 = new ImageIcon("res\\space.gif");
 		ImageIcon referencia3 = new ImageIcon("res\\space.gif");
-		ImageIcon referencia4 = new ImageIcon("res\\gato.png");
+		ImageIcon referencia4 = new ImageIcon("res\\nivel2.png");
 		fundo = referencia.getImage();
 		fundo1 = referencia1.getImage();
 		fundo2 = referencia2.getImage();
@@ -99,7 +100,13 @@ public class fase extends JPanel implements ActionListener {
 		Graphics2D graficos = (Graphics2D) g;
 
 		if (teste3 == true) {
-			graficos.drawImage(fundo1, 0, 0, null);
+			if (nivel2 == false)
+				graficos.drawImage(fundo1, 0, 0, null);
+			if (nivel2 == true){
+				graficos.drawImage(inicio, 0, 0, null);
+				
+			}
+
 			if (teste4 == false) {
 				init1 = System.currentTimeMillis();
 				teste4 = true;
@@ -111,7 +118,13 @@ public class fase extends JPanel implements ActionListener {
 					g.dispose();
 					teste3 = false;
 					teste4 = false;
-					setEmJogo(true);
+					if (nivel2 == false){
+						setEmJogo(true);
+					}
+					if (nivel2 == true){
+						g.dispose();
+						setEmJogo(false);
+					}
 				} else {
 					fim1 = System.currentTimeMillis();
 				}
@@ -149,12 +162,12 @@ public class fase extends JPanel implements ActionListener {
 			graficos.drawString("INIMIGOS: " + controle + controle1, 100, 20);
 			graficos.setColor(Color.GREEN);
 			graficos.drawString("PONTOS: " + pontos, 400, 20);
-			graficos.setFont(new Font("SPACEMAN", Font.PLAIN, 100));
+			graficos.setFont(new Font("SPACEMAN", Font.PLAIN, 80));
 
 			if (passou == true) {
 
 				graficos.setColor(Color.BLUE);
-				graficos.drawString("NIVEL " + nivel, 300, 200);
+				graficos.drawString("BATERIA " + nivel, 300, 200);
 				teste = true;
 				if (teste == true) {
 					if (teste2 == false) {
@@ -178,11 +191,12 @@ public class fase extends JPanel implements ActionListener {
 
 			}
 
+			
+
 		} else if (gameover) {
 
-			// ImageIcon end = new ImageIcon("res\\gameover.jpg");
-			// graficos.drawImage(end.getImage(), 0, 0, null);
-
+			//ImageIcon end = new ImageIcon("res\\gameover.jpg");
+			//graficos.drawImage(end.getImage(), 0, 0, null);
 			graficos.setFont(new Font("SPACEMAN", Font.PLAIN, 50));
 			graficos.setColor(Color.RED);
 			graficos.drawString("VOCE MATOU: " + pontos, 100, 300);
@@ -200,16 +214,18 @@ public class fase extends JPanel implements ActionListener {
 
 			nivel += 1;
 			controle += 1;
-
 			passou = true;
 			inicializaInimigos();
 
-			if (nivel >= 5) {
+			if (nivel >= 2) {
+				nivel2 = true;
+				teste3 = true;
 				Inimigo.VELOCIDADE += 1;
 				Circulo.VELOCIDADE += 1;
+				
 			}
-			if (controle >= inimigos.size()) {
-				controle = inimigos.size();
+			if (controle >= 13) {
+				controle = 13;
 			}
 
 			if (controle1 >= inimigos1.size()) {
