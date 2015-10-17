@@ -28,16 +28,24 @@ public class fase extends JPanel implements ActionListener {
 	private nave naves;
 	static int nivel = 1;
 	private Timer timer;
-	private int controle = 5;
-	private int controle1 = 5;
+	private int controle = 15;
+	private int controle1 = 40;
 
-	private int[][] triangulos = { { 1880, 239 }, { 1790, 259 }, { 1760, 150 }, { 1790, 150 }, { 1980, 209 },
-			{ 1560, 390 }, { 1510, 70 }, { 1700, 330 }, { 1920, 300 }, { 1856, 328 }, { 1456, 320 }, { 1800, 400 },
-			{ 3200, 221 }, { 2400, 320 }, };
+	private int[][] triangulos = { { 3077, 516 }, { 3073, 299 }, { 3076, 15 }, { 1872, 377 }, { 2543, 404 },
+			{ 3360, 455 }, { 1382, 671 }, { 1919, 369 }, { 1542, 642 }, { 2851, 676 }, { 2851, 676 }, { 2184, 650 },
+			{ 1790, 126 }, { 1825, 235 }, { 1632, 691 }, { 2538, 77 }, { 2037, 531 }, { 1785, 460 }, { 2499, 108 },
+			{ 2772, 402 }, { 2229, 91 }, { 2565, 186 }, { 1525, 409 }, { 1580, 98 }, { 2450, 585 }, { 3362, 698 },
+			{ 2610, 12 }, { 1654, 488 }, { 2419, 334 }, { 1879, 44 }, { 3503, 148 }, { 1530, 535 }, { 3172, 423 },
+			{ 3087, 26 }, { 3265, 575 }, { 3310, 227 }, { 1869, 489 }, { 2979, 405 }, { 1836, 631 }, { 2129, 52 },
+			{ 1780, 419 }, { 2006, 265 }, { 2208, 58 }, { 2706, 488 }, { 2316, 312 }, { 2430, 682 }, };
 
-	private int[][] circulos = { { 2380, 29 }, { 2600, 59 }, { 1380, 89 }, { 1780, 109 }, { 1580, 139 }, { 1880, 239 },
-			{ 1790, 259 }, { 1760, 150 }, { 1790, 150 }, { 1980, 209 }, { 1560, 500 }, { 1510, 70 }, { 1930, 159 },
-			{ 1590, 80 }, { 1530, 60 }, { 1940, 259 }, { 1990, 430 }, { 1920, 200 }, { 1900, 259 }, };
+	private int[][] circulos = { { 3077, 516 }, { 3073, 299 }, { 3076, 15 }, { 1872, 377 }, { 2543, 404 },
+			{ 3360, 455 }, { 1382, 671 }, { 1919, 369 }, { 1542, 642 }, { 2851, 676 }, { 2851, 676 }, { 2184, 650 },
+			{ 1790, 126 }, { 1825, 235 }, { 1632, 691 }, { 2538, 77 }, { 2037, 531 }, { 1785, 460 }, { 2499, 108 },
+			{ 2772, 402 }, { 2229, 91 }, { 2565, 186 }, { 1525, 409 }, { 1580, 98 }, { 2450, 585 }, { 3362, 698 },
+			{ 2610, 12 }, { 1654, 488 }, { 2419, 334 }, { 1879, 44 }, { 3503, 148 }, { 1530, 535 }, { 3172, 423 },
+			{ 3087, 26 }, { 3265, 575 }, { 3310, 227 }, { 1869, 489 }, { 2979, 405 }, { 1836, 631 }, { 2129, 52 },
+			{ 1780, 419 }, { 2006, 265 }, { 2208, 58 }, { 2706, 488 }, { 2316, 312 }, { 2430, 682 }, };
 
 	/*
 	 * private int[][] quadrado = { { 2380, 29 }, { 2600, 59 }, { 1380, 89 }, {
@@ -70,7 +78,7 @@ public class fase extends JPanel implements ActionListener {
 		setDoubleBuffered(true);
 		setFocusable(true);
 		addKeyListener(new TecladoAdapter());
-		ImageIcon referencia = new ImageIcon("res\\sky.png");
+		ImageIcon referencia = new ImageIcon("res\\sky.gif");
 		ImageIcon referencia1 = new ImageIcon("res\\nivel1.png");
 		ImageIcon referencia4 = new ImageIcon("res\\nivel2.png");
 		fundo = referencia.getImage();
@@ -91,7 +99,7 @@ public class fase extends JPanel implements ActionListener {
 		}
 
 		inimigos1 = new ArrayList<Circulo>();
-		for (int i = 0; i < controle1; i++) {
+		for (int i = 45; i > controle1; i--) {
 			inimigos1.add(new Circulo(circulos[i][0], circulos[i][1]));
 		}
 
@@ -209,8 +217,8 @@ public class fase extends JPanel implements ActionListener {
 			// ImageIcon end = new ImageIcon("res\\gameover.jpg");
 			// graficos.drawImage(end.getImage(), 0, 0, null);
 
-			graficos.setFont(new Font("DK Petit Four", Font.PLAIN, 100));
-			graficos.setColor(Color.BLUE);
+			graficos.setFont(new Font("DK Petit Four", Font.PLAIN, 120));
+			graficos.setColor(Color.RED);
 			graficos.drawString("VOCE ACERTOU: " + pontos, 150, 300);
 
 		}
@@ -243,13 +251,6 @@ public class fase extends JPanel implements ActionListener {
 				Triangulo.VELOCIDADE += 1;
 				Circulo.VELOCIDADE += 1;
 
-			}
-			if (controle >= 13) {
-				controle = 13;
-			}
-
-			if (controle1 >= inimigos1.size()) {
-				controle1 = inimigos1.size();
 			}
 
 		}
@@ -347,11 +348,15 @@ public class fase extends JPanel implements ActionListener {
 				formaInimigo = tempInimigo.getBounds();
 				if (formaMissel.intersects((formaInimigo))) {
 					if (nivel <= 3) {
+						controle = 15;
+						controle1 = 40;
 						tempInimigo.setVisivel(false);
 						tempMissel.setVisivel(false);
 
 						pontos += 1;
 					} else if (nivel > 3) {
+						controle = 5;
+						controle1 = 25;
 						tempInimigo.setVisivel(true);
 						tempMissel.setVisivel(true);
 					}

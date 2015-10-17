@@ -20,7 +20,7 @@ public class Circulo {
 		this.x = x;
 		this.y = y;
 		
-		ImageIcon referencia = new ImageIcon("res\\circulo.png");
+		ImageIcon referencia = new ImageIcon("res\\circulo_roxo.gif");
 		imagem = referencia.getImage();
 		
 		this.largura = imagem.getWidth(null);

@@ -14,9 +14,9 @@ public class nave {
 	private int dx, dy;
 	private int altura, largura;
 	private Image imagem;
-	Image imagem2;
 	private List<missel> misseis;
 	private boolean isVisivel;
+	public static int VELOCIDADE = 3;
 
 	public boolean isVisivel() {
 		return isVisivel;
@@ -38,10 +38,7 @@ public class nave {
 		return imagem;
 	}
 
-	public Image getImagem2() {
-		return imagem2;
-	}
-
+	
 	public void atira() {
 		this.misseis.add(new missel(x + largura, y + altura / 2));
 
@@ -68,8 +65,8 @@ public class nave {
 			y = -1;
 		}
 
-		if (this.y > 450) {
-			y = 450;
+		if (this.y > 700) {
+			y = 700;
 		}
 
 	}
@@ -79,18 +76,18 @@ public class nave {
 		if (fase.isEmJogo()) {
 
 			if (codigo == KeyEvent.VK_UP) {
-				dy = -3;
+				dy = -VELOCIDADE;
 			}
 
 			if (codigo == KeyEvent.VK_DOWN) {
-				dy = 3;
+				dy = VELOCIDADE;
 			}
 			if (codigo == KeyEvent.VK_LEFT) {
-				dx = -3;
+				dx = -VELOCIDADE;
 			}
 
 			if (codigo == KeyEvent.VK_RIGHT) {
-				dx = 3;
+				dx = VELOCIDADE;
 			}
 
 			if (codigo == KeyEvent.VK_SPACE) {
