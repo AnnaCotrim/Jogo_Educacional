@@ -65,8 +65,8 @@ public class nave {
 			y = -1;
 		}
 
-		if (this.y > 620) {
-			y = 620;
+		if (this.y > 700) {
+			y = 700;
 		}
 
 	}

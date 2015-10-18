@@ -6,35 +6,34 @@ import java.awt.Rectangle;
 import javax.swing.ImageIcon;
 
 public class missel {
-	
+
 	private Image imagem;
-	private int x,y;
-	private int largura,altura;
+	private int x, y;
+	private int largura, altura;
 	private boolean isVisivel;
-	
-	private static final int LARGURA_TELA = 1200;
+
+	private static final int LARGURA_TELA = 1366;
 	private static final int VELOCIDADE = 3;
-	
-	public missel(int x, int y)
-	{
+
+	public missel(int x, int y) {
 		this.x = x;
 		this.y = y;
-		
+
 		ImageIcon referencia = new ImageIcon("res\\bullet.gif");
 		imagem = referencia.getImage();
-		
+
 		this.largura = imagem.getWidth(null);
 		this.altura = imagem.getHeight(null);
-		
+
 		isVisivel = true;
 	}
-	
-	public void mexer()
-	{
-		this.x += VELOCIDADE;
-		if (this.x > LARGURA_TELA)
-		{
-			isVisivel = false;
+
+	public void mexer() {
+		if (fase.isEmJogo()) {
+			this.x += VELOCIDADE;
+			if (this.x > LARGURA_TELA) {
+				isVisivel = false;
+			}
 		}
 	}
 
@@ -57,11 +56,9 @@ public class missel {
 	public int getY() {
 		return y;
 	}
-	
-	public Rectangle getBounds(){
-		return new Rectangle(x,y,largura,altura);
+
+	public Rectangle getBounds() {
+		return new Rectangle(x, y, largura, altura);
 	}
-	
-	
 
 }

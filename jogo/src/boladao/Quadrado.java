@@ -30,10 +30,12 @@ public class Quadrado {
 	}
 
 	public void mexer() {
-		if (this.x < 0) {
-			this.x = LARGURA_TELA;
-		} else {
-			this.x -= VELOCIDADE;
+		if (fase.isEmJogo()) {
+			if (this.x < 0) {
+				this.x = LARGURA_TELA;
+			} else {
+				this.x -= VELOCIDADE;
+			}
 		}
 	}
 
