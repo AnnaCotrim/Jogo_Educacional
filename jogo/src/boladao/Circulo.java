@@ -19,8 +19,14 @@ public class Circulo {
 		this.x = x;
 		this.y = y;
 
-		ImageIcon referencia = new ImageIcon("res\\circulo_roxo.gif");
-		imagem = referencia.getImage();
+		if (fase.nivel <= 3) {
+			ImageIcon referencia = new ImageIcon("res\\circulo_roxo.gif");
+			imagem = referencia.getImage();
+		} else if (fase.nivel > 3) {
+			ImageIcon referencia = new ImageIcon("res\\circulo_verde.gif");
+			imagem = referencia.getImage();
+
+		}
 
 		this.largura = imagem.getWidth(null);
 		this.altura = imagem.getHeight(null);
