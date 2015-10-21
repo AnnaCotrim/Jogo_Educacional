@@ -85,6 +85,8 @@ public class fase extends JPanel implements ActionListener {
 		inicio = referencia4.getImage();
 		naves = new nave();
 		inicializaInimigos();
+		PlaySound p = new PlaySound();
+		p.playSound("res\\space.wav");
 		timer = new Timer(5, this);
 		timer.start();
 
@@ -94,7 +96,7 @@ public class fase extends JPanel implements ActionListener {
 
 		if (nivel <= 3) {
 			inimigos = new ArrayList<Triangulo>();
-			for (int i = 0; i < controle; i++) {
+			for (int i = 0; i <=45; i++) {
 				inimigos.add(new Triangulo(triangulos[i][0], triangulos[i][1]));
 
 			}
@@ -154,7 +156,7 @@ public class fase extends JPanel implements ActionListener {
 		}
 
 		if (isEmJogo()) {
-
+			tocarMusica();
 			graficos.drawImage(fundo, 0, 0, null);
 			// graficos.drawImage(fundo1, 498, 0, null);
 			// graficos.drawImage(fundo2, 0, 574, null);
@@ -212,6 +214,7 @@ public class fase extends JPanel implements ActionListener {
 							passou = false;
 							teste = false;
 							teste2 = false;
+
 						} else {
 							fim = System.currentTimeMillis();
 						}
@@ -316,6 +319,20 @@ public class fase extends JPanel implements ActionListener {
 
 	}
 
+	public void tocarMusica() {
+
+		PlaySound p = new PlaySound();
+		//p.playSound("res\\space.wav");
+
+		if (nave.tiro == true) {
+			
+			PlaySound c = new PlaySound();
+			c.playSound("res\\laser.wav");
+			nave.tiro = false;
+		}
+
+	}
+
 	public void checarColisoes() {
 		Rectangle formaNave = naves.getBounds();
 		Rectangle formaInimigo;
@@ -391,7 +408,7 @@ public class fase extends JPanel implements ActionListener {
 				formaInimigo = tempInimigo.getBounds();
 				if (formaMissel.intersects((formaInimigo))) {
 
-					if ((nivel > 3) && (nivel <6)) {
+					if ((nivel > 3) && (nivel < 6)) {
 						controle1 = 15;
 						tempInimigo.setVisivel(false);
 						tempMissel.setVisivel(false);

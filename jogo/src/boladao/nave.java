@@ -17,6 +17,7 @@ public class nave {
 	private List<missel> misseis;
 	private boolean isVisivel;
 	public static int VELOCIDADE = 3;
+	public static boolean tiro;
 
 	public boolean isVisivel() {
 		return isVisivel;
@@ -92,6 +93,7 @@ public class nave {
 
 			if (codigo == KeyEvent.VK_SPACE) {
 				atira();
+				tiro = true;
 			}
 		}
 
