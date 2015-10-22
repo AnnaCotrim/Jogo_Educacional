@@ -62,7 +62,9 @@ public class fase extends JPanel implements ActionListener {
 	private long init, fim, init1, fim1;
 	private boolean teste, teste2, teste4, gameover;
 	private boolean teste3 = true;
-	private boolean nivel2;
+	private boolean nivel1 = true;
+	private boolean nivel2 = false;
+	private boolean nivel3 = false;
 	int pontos = 0;
 
 	public static boolean isEmJogo() {
@@ -78,8 +80,8 @@ public class fase extends JPanel implements ActionListener {
 		setFocusable(true);
 		addKeyListener(new TecladoAdapter());
 		ImageIcon referencia = new ImageIcon("res\\sky.gif");
-		ImageIcon referencia1 = new ImageIcon("res\\nivel1.png");
-		ImageIcon referencia4 = new ImageIcon("res\\nivel2.png");
+		ImageIcon referencia1 = new ImageIcon("res\\nivel1.gif");
+		ImageIcon referencia4 = new ImageIcon("res\\nivel2.gif");
 		fundo = referencia.getImage();
 		fundo1 = referencia1.getImage();
 		inicio = referencia4.getImage();
@@ -96,7 +98,7 @@ public class fase extends JPanel implements ActionListener {
 
 		if (nivel <= 3) {
 			inimigos = new ArrayList<Triangulo>();
-			for (int i = 0; i <=45; i++) {
+			for (int i = 0; i <= 10; i++) {
 				inimigos.add(new Triangulo(triangulos[i][0], triangulos[i][1]));
 
 			}
@@ -123,10 +125,23 @@ public class fase extends JPanel implements ActionListener {
 		Graphics2D graficos = (Graphics2D) g;
 
 		if (teste3 == true) {
-			if (nivel2 == false)
+			if (nivel1 == true) {
+				
 				graficos.drawImage(fundo1, 0, 0, null);
+				nivel1 = false;
+			}
+
 			if (nivel2 == true) {
+				setEmJogo(false);
 				graficos.drawImage(inicio, 0, 0, null);
+				nivel2 = false;
+
+			}
+
+			if (nivel3 == true) {
+				setEmJogo(false);
+				graficos.drawImage(fundo1, 0, 0, null);
+				nivel3 = false;
 
 			}
 
@@ -137,17 +152,12 @@ public class fase extends JPanel implements ActionListener {
 
 			if (teste4 == true) {
 				fim1 = System.currentTimeMillis();
-				if (fim1 - init1 >= 3000.0) {
+				if (fim1 - init1 >= 5000.0) {
 					g.dispose();
+					setEmJogo(true);
 					teste3 = false;
 					teste4 = false;
-					if (nivel2 == false) {
-						setEmJogo(true);
-					}
-					if (nivel2 == true) {
-						g.dispose();
-						setEmJogo(false);
-					}
+
 				} else {
 					fim1 = System.currentTimeMillis();
 				}
@@ -158,9 +168,6 @@ public class fase extends JPanel implements ActionListener {
 		if (isEmJogo()) {
 			tocarMusica();
 			graficos.drawImage(fundo, 0, 0, null);
-			// graficos.drawImage(fundo1, 498, 0, null);
-			// graficos.drawImage(fundo2, 0, 574, null);
-			// graficos.drawImage(fundo3, 498, 574, null);
 			graficos.drawImage(naves.getImagem(), naves.getX(), naves.getY(), this);
 			List<missel> misseis = naves.getMisseis();
 
@@ -196,33 +203,25 @@ public class fase extends JPanel implements ActionListener {
 			graficos.drawString("PONTOS: " + pontos, 550, 50);
 			graficos.setFont(new Font("DK Petit Four", Font.PLAIN, 150));
 
-			if (passou == true) {
-
-				graficos.setColor(Color.RED);
-				graficos.drawString("NIVEL " + nivel, 500, 350);
-				teste = true;
-				if (teste == true) {
-					if (teste2 == false) {
-						init = System.currentTimeMillis();
-						teste2 = true;
-					}
-
-					if (teste2 == true) {
-						fim = System.currentTimeMillis();
-						if (fim - init >= 3000.0) {
-							g.dispose();
-							passou = false;
-							teste = false;
-							teste2 = false;
-
-						} else {
-							fim = System.currentTimeMillis();
-						}
-
-					}
-				}
-
-			}
+			/*
+			 * if (passou == true) {
+			 * 
+			 * graficos.setColor(Color.RED); graficos.drawString("NIVEL " +
+			 * nivel, 500, 350); teste = true; if (teste == true) {
+			 * 
+			 * if (teste2 == false) { init = System.currentTimeMillis(); teste2
+			 * = true; }
+			 * 
+			 * if (teste2 == true) { fim = System.currentTimeMillis(); if (fim -
+			 * init >= 3000.0) { g.dispose(); passou = false; teste = false;
+			 * teste2 = false;
+			 * 
+			 * } else { fim = System.currentTimeMillis(); }
+			 * 
+			 * } }
+			 * 
+			 * }
+			 */
 
 		} else if (gameover) {
 
@@ -256,6 +255,18 @@ public class fase extends JPanel implements ActionListener {
 			passou = true;
 			inicializaInimigos();
 
+		}
+
+		if (nivel == 4) {
+			nivel2 = true;
+			teste3 = true;
+			nivel += 1;
+		}
+
+		if (nivel == 6) {
+			nivel3 = true;
+			teste3 = true;
+			nivel += 1;
 		}
 
 		if (nivel >= 6) {
@@ -322,10 +333,10 @@ public class fase extends JPanel implements ActionListener {
 	public void tocarMusica() {
 
 		PlaySound p = new PlaySound();
-		//p.playSound("res\\space.wav");
+		// p.playSound("res\\space.wav");
 
 		if (nave.tiro == true) {
-			
+
 			PlaySound c = new PlaySound();
 			c.playSound("res\\laser.wav");
 			nave.tiro = false;
