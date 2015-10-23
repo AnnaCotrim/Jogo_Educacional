@@ -28,32 +28,31 @@ public class fase extends JPanel implements ActionListener {
 	private nave naves;
 	static int nivel = 1;
 	private Timer timer;
-	private int controle = 15;
-	private int controle1 = 5;
-	private int controle2 = 5;
-
-	private int[][] triangulos = { { 2112, 551 }, { 2566, 171 }, { 1493, 87 }, { 3169, 138 }, { 2595, 213 },
-			{ 2638, 101 }, { 1395, 265 }, { 3452, 31 }, { 2334, 155 }, { 3591, 609 }, { 3970, 413 }, { 3205, 152 },
-			{ 3580, 545 }, { 3133, 323 }, { 2812, 572 }, { 3974, 393 }, { 2236, 47 }, { 3465, 589 }, { 3335, 553 },
-			{ 3392, 28 }, { 2976, 267 }, { 2047, 332 }, { 3612, 327 }, { 1408, 500 }, { 3677, 237 }, { 1495, 321 },
-			{ 3710, 527 }, { 3178, 496 }, { 2713, 432 }, { 3497, 134 }, { 1992, 574 }, { 3027, 280 }, { 1709, 312 },
-			{ 1399, 20 }, { 1640, 19 }, { 3902, 70 }, { 3902, 70 }, { 3449, 228 }, { 3596, 269 }, { 1911, 379 },
-			{ 1681, 490 }, { 2396, 35 }, { 3865, 527 }, { 2405, 546 }, { 2088, 453 }, { 2479, 504 }, { 3911, 54 },
-			{ 2095, 54 }, { 2493, 613 }, { 3051, 585 }, };
-
-	private int[][] circulos = { { 3535, 17 }, { 2951, 259 }, { 3900, 32 }, { 2057, 428 }, { 2748, 134 }, { 1378, 375 },
-			{ 2265, 477 }, { 3106, 184 }, { 3639, 514 }, { 2329, 124 }, { 3701, 113 }, { 2553, 402 }, { 2423, 554 },
-			{ 2968, 159 }, { 3717, 335 }, { 3760, 588 }, { 2977, 29 }, { 3378, 170 }, { 3198, 537 }, { 1915, 550 },
-			{ 2636, 472 }, { 3648, 518 }, { 3066, 272 }, { 3860, 398 }, { 3826, 112 }, { 1805, 226 }, { 3056, 274 },
-			{ 2619, 174 }, { 2099, 547 }, { 2047, 55 }, { 3636, 387 }, { 2189, 328 }, { 3968, 352 }, { 2705, 427 },
-			{ 3319, 214 }, { 3264, 311 }, { 1561, 594 }, { 2094, 176 }, { 2835, 543 }, { 2788, 353 }, { 3722, 70 },
-			{ 1575, 605 }, { 3276, 24 }, { 1566, 11 }, { 2412, 182 }, { 3847, 525 }, { 3211, 567 }, };
-
-	private int[][] quadrado = { { 3222, 523 }, { 1645, 569 }, { 2941, 287 }, { 2795, 185 }, { 2426, 502 },
-			{ 3197, 293 }, { 3152, 573 }, { 3786, 522 }, { 2811, 77 }, { 2078, 481 }, { 3479, 450 }, { 1531, 281 },
-			{ 3360, 196 }, { 2222, 604 }, { 2791, 410 }, { 2997, 369 }, { 2174, 194 }, { 3111, 375 }, { 2513, 386 },
-			{ 3683, 564 }, { 3595, 329 }, { 3894, 419 }, { 2848, 93 }, { 2755, 521 }, { 1698, 620 }, };
-
+	private int controle;
+	private int controle1;
+	private int controle2;
+	private int[][] triangulos = { { 6022, 596 }, { 6156, 195 }, { 2824, 217 }, { 3414, 539 }, { 9181, 515 },
+			{ 7437, 184 }, { 3568, 314 }, { 5112, 171 }, { 8011, 425 }, { 9918, 303 }, { 4892, 620 }, { 4002, 341 },
+			{ 7161, 488 }, { 3786, 382 }, { 2903, 514 }, { 5408, 469 }, { 3205, 426 }, { 6165, 558 }, { 10828, 151 },
+			{ 3742, 558 }, { 4728, 538 }, { 1596, 374 }, { 4310, 258 }, { 1822, 326 }, { 7180, 159 }, { 8676, 413 },
+			{ 8445, 135 }, { 6125, 520 }, { 5330, 578 }, { 9837, 323 }, { 1822, 428 }, { 9837, 323 }, { 1822, 428 },
+			{ 6430, 607 }, { 2828, 552 }, { 10679, 356 }, { 7659, 243 }, { 7550, 178 }, { 5262, 328 }, { 6410, 515 },
+			{ 8586, 418 }, { 6523, 249 }, { 2682, 334 }, { 6907, 148 }, { 6523, 249 }, { 2682, 334 }, { 6908, 148 },
+			{ 2215, 214 }, { 4288, 355 }, { 4386, 388 }, { 4625, 316 }, { 5219, 206 }, };
+	private int[][] circulos = { { 2399, 149 }, { 3331, 188 }, { 4947, 556 }, { 9244, 178 }, { 8512, 215 },
+			{ 4419, 615 }, { 8739, 538 }, { 7117, 536 }, { 7214, 175 }, { 5113, 164 }, { 7374, 226 }, { 7219, 292 },
+			{ 9114, 475 }, { 9256, 158 }, { 4049, 289 }, { 5272, 358 }, { 1818, 281 }, { 3444, 583 }, { 10450, 231 },
+			{ 7139, 312 }, { 7924, 174 }, { 6215, 525 }, { 7431, 539 }, { 7670, 297 }, { 6821, 493 }, { 9078, 463 },
+			{ 6437, 444 }, { 9810, 532 }, { 3994, 445 }, { 9899, 171 }, { 10267, 242 }, { 4854, 587 }, { 3104, 524 },
+			{ 1400, 187 }, { 5107, 190 }, { 2494, 353 }, { 7127, 318 }, { 8759, 121 }, { 2607, 148 }, { 8631, 515 },
+			{ 5743, 476 }, { 9333, 373 }, { 5786, 319 }, { 9434, 439 }, { 9887, 309 }, { 6621, 259 }, { 3023, 422 }, };
+	private int[][] quadrado = { { 10357, 527 }, { 6347, 591 }, { 4756, 367 }, { 4076, 175 }, { 2432, 241 },
+			{ 2636, 192 }, { 5782, 393 }, { 5117, 326 }, { 2801, 372 }, { 4231, 173 }, { 7378, 491 }, { 3535, 230 },
+			{ 2235, 405 }, { 8282, 568 }, { 10187, 471 }, { 8005, 141 }, { 5281, 193 }, { 6991, 290 }, { 5717, 365 },
+			{ 1981, 271 }, { 6318, 396 }, { 9304, 570 }, { 2917, 218 }, { 2423, 203 }, { 6326, 471 }, { 2805, 607 },
+			{ 4102, 497 }, { 1475, 582 }, { 4784, 456 }, { 9712, 509 }, { 6201, 469 }, { 2654, 523 }, { 8349, 121 },
+			{ 10645, 566 }, { 7223, 312 }, { 9860, 429 }, { 6118, 487 }, { 6608, 132 }, { 1819, 436 }, { 2833, 476 },
+			{ 4093, 377 }, { 9609, 432 }, { 6606, 171 }, { 8083, 369 }, { 7334, 266 }, { 4502, 334 }, };
 	private static boolean emJogo;
 	private boolean passou;
 	private List<Triangulo> inimigos;
@@ -96,9 +95,19 @@ public class fase extends JPanel implements ActionListener {
 
 	public void inicializaInimigos() {
 
-		if (nivel <= 3) {
+		if (nivel <= 2)
+			controle1 = 5;
+		else if (nivel > 2 && nivel < 5) {
+			controle1 = 45;
+			controle2 = 5;
+		} else if (nivel >= 5) {
+			controle1 = 5;
+			controle2 = 45;
+		}
+
+		if (nivel <= 2) {
 			inimigos = new ArrayList<Triangulo>();
-			for (int i = 0; i <= 10; i++) {
+			for (int i = 0; i <= 45; i++) {
 				inimigos.add(new Triangulo(triangulos[i][0], triangulos[i][1]));
 
 			}
@@ -110,7 +119,7 @@ public class fase extends JPanel implements ActionListener {
 			inimigos1.add(new Circulo(circulos[i][0], circulos[i][1]));
 		}
 
-		if (nivel > 3) {
+		if (nivel > 2) {
 			inimigos2 = new ArrayList<Quadrado>();
 			for (int i = 0; i < controle2; i++) {
 				inimigos2.add(new Quadrado(quadrado[i][0], quadrado[i][1]));
@@ -126,9 +135,8 @@ public class fase extends JPanel implements ActionListener {
 
 		if (teste3 == true) {
 			if (nivel1 == true) {
-				
 				graficos.drawImage(fundo1, 0, 0, null);
-				nivel1 = false;
+
 			}
 
 			if (nivel2 == true) {
@@ -157,6 +165,7 @@ public class fase extends JPanel implements ActionListener {
 					setEmJogo(true);
 					teste3 = false;
 					teste4 = false;
+					nivel1 = false;
 
 				} else {
 					fim1 = System.currentTimeMillis();
@@ -176,7 +185,7 @@ public class fase extends JPanel implements ActionListener {
 				graficos.drawImage(m.getImagem(), m.getX(), m.getY(), this);
 			}
 
-			if (nivel <= 3) {
+			if (nivel <= 2) {
 				for (int i = 0; i < inimigos.size(); i++) {
 					Triangulo in = inimigos.get(i);
 					graficos.drawImage(in.getImagem(), in.getX(), in.getY(), this);
@@ -190,7 +199,7 @@ public class fase extends JPanel implements ActionListener {
 
 			}
 
-			if (nivel > 3) {
+			if (nivel > 2) {
 				for (int i = 0; i < inimigos2.size(); i++) {
 					Quadrado in1 = inimigos2.get(i);
 					graficos.drawImage(in1.getImagem(), in1.getX(), in1.getY(), this);
@@ -199,6 +208,8 @@ public class fase extends JPanel implements ActionListener {
 			}
 
 			graficos.setFont(new Font("DK Petit Four", Font.PLAIN, 60));
+			graficos.setColor(Color.GREEN);
+			graficos.drawString("NIVEL: " + nivel, 150, 50);
 			graficos.setColor(Color.BLACK);
 			graficos.drawString("PONTOS: " + pontos, 550, 50);
 			graficos.setFont(new Font("DK Petit Four", Font.PLAIN, 150));
@@ -241,43 +252,45 @@ public class fase extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 
-		if ((inimigos.size() == 0) && (nivel <= 3)) {
+		if ((inimigos.size() == 0) && (nivel <= 2)) {
 
 			nivel += 1;
-			controle += 1;
 			passou = true;
+			teste = true;
+
 			inicializaInimigos();
 		}
-		if ((inimigos1.size() == 0) && (nivel > 3 || nivel < 6)) {
+		if ((inimigos1.size() == 0) && (nivel > 2 || nivel <= 4)) {
 
 			nivel += 1;
-			controle1 += 1;
 			passou = true;
+			teste = true;
+
 			inicializaInimigos();
 
 		}
 
-		if (nivel == 4) {
-			nivel2 = true;
-			teste3 = true;
-			nivel += 1;
-		}
-
-		if (nivel == 6) {
-			nivel3 = true;
-			teste3 = true;
-			nivel += 1;
-		}
-
-		if (nivel >= 6) {
+		if (nivel >= 5) {
 			if (inimigos2.size() == 0) {
 				nivel += 1;
-				controle1 += 1;
-				controle += 1;
 				passou = true;
+
 				inicializaInimigos();
+
 			}
 
+		}
+
+		if ((nivel == 3) && (teste == true)) {
+			nivel2 = true;
+			teste3 = true;
+			teste = false;
+		}
+
+		if ((nivel == 5) && (teste == true)) {
+			nivel3 = true;
+			teste3 = true;
+			teste = false;
 		}
 
 		List<missel> misseis = naves.getMisseis();
@@ -312,7 +325,7 @@ public class fase extends JPanel implements ActionListener {
 			}
 		}
 
-		if (nivel > 3) {
+		if (nivel > 2) {
 			for (int i = 0; i < inimigos2.size(); i++) {
 				Quadrado in3 = inimigos2.get(i);
 				if (in3.isVisivel()) {
@@ -351,7 +364,7 @@ public class fase extends JPanel implements ActionListener {
 		Rectangle formaCirculo;
 		Rectangle formaQuadrado;
 
-		if (nivel <= 3) {
+		if (nivel <= 2) {
 			for (int i = 0; i < inimigos.size(); i++) {
 				Triangulo tempInimigo = inimigos.get(i);
 				formaInimigo = tempInimigo.getBounds();
@@ -377,7 +390,7 @@ public class fase extends JPanel implements ActionListener {
 			}
 		}
 
-		if (nivel > 3) {
+		if (nivel > 2) {
 			for (int i = 0; i < inimigos2.size(); i++) {
 				Quadrado tempInimigo = inimigos2.get(i);
 				formaQuadrado = tempInimigo.getBounds();
@@ -400,13 +413,13 @@ public class fase extends JPanel implements ActionListener {
 				Triangulo tempInimigo = inimigos.get(j);
 				formaInimigo = tempInimigo.getBounds();
 				if (formaMissel.intersects((formaInimigo))) {
-					if (nivel <= 3) {
+					if (nivel <= 2) {
 
 						tempInimigo.setVisivel(false);
 						tempMissel.setVisivel(false);
 
 						pontos += 1;
-					} else if (nivel > 3) {
+					} else if (nivel > 2) {
 						tempInimigo.setVisivel(true);
 						tempMissel.setVisivel(true);
 					}
@@ -419,13 +432,12 @@ public class fase extends JPanel implements ActionListener {
 				formaInimigo = tempInimigo.getBounds();
 				if (formaMissel.intersects((formaInimigo))) {
 
-					if ((nivel > 3) && (nivel < 6)) {
-						controle1 = 15;
+					if ((nivel > 2) && (nivel < 5)) {
 						tempInimigo.setVisivel(false);
 						tempMissel.setVisivel(false);
 
 						pontos += 1;
-					} else if (nivel <= 3) {
+					} else if ((nivel <= 2) || (nivel >= 5)) {
 						tempInimigo.setVisivel(true);
 						tempMissel.setVisivel(true);
 					}
@@ -434,19 +446,18 @@ public class fase extends JPanel implements ActionListener {
 
 			}
 
-			if (nivel > 3) {
+			if (nivel > 2) {
 				for (int j = 0; j < inimigos2.size(); j++) {
 					Quadrado tempInimigo = inimigos2.get(j);
 					formaInimigo = tempInimigo.getBounds();
 					if (formaMissel.intersects((formaInimigo))) {
-						if (nivel >= 6) {
-							controle2 = 15;
-							controle1 = 5;
+						if (nivel >= 5) {
+
 							tempInimigo.setVisivel(false);
 							tempMissel.setVisivel(false);
 							pontos += 1;
 
-						} else if ((nivel > 3) && (nivel < 6)) {
+						} else if ((nivel > 2) && (nivel < 5)) {
 							tempInimigo.setVisivel(true);
 							tempMissel.setVisivel(true);
 

@@ -20,7 +20,7 @@ public class Triangulo {
 		this.x = x;
 		this.y = y;
 
-		ImageIcon referencia = new ImageIcon("res\\triangulo_azul.gif");
+		ImageIcon referencia = new ImageIcon("res\\triangulo_amarelo.gif");
 		imagem = referencia.getImage();
 
 		this.largura = imagem.getWidth(null);

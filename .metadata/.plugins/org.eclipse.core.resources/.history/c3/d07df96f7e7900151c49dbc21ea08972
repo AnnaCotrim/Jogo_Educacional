@@ -1,0 +1,475 @@
+package boladao;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.ImageIcon;
+import javax.swing.JPanel;
+import javax.swing.Timer;
+
+public class fase extends JPanel implements ActionListener {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private Image fundo;
+	private Image fundo1;
+	private Image inicio;
+	private nave naves;
+	static int nivel = 1;
+	private Timer timer;
+	private int controle = 5;
+	private int controle1 = 5;
+	private int controle2 = 5;
+	private int[][] triangulos = { { 6022, 596 }, { 6156, 195 }, { 2824, 217 }, { 3414, 539 }, { 9181, 515 },
+			{ 7437, 184 }, { 3568, 314 }, { 5112, 171 }, { 8011, 425 }, { 9918, 303 }, { 4892, 620 }, { 4002, 341 },
+			{ 7161, 488 }, { 3786, 382 }, { 2903, 514 }, { 5408, 469 }, { 3205, 426 }, { 6165, 558 }, { 10828, 151 },
+			{ 3742, 558 }, { 4728, 538 }, { 1596, 374 }, { 4310, 258 }, { 1822, 326 }, { 7180, 159 }, { 8676, 413 },
+			{ 8445, 135 }, { 6125, 520 }, { 5330, 578 }, { 9837, 323 }, { 1822, 428 }, { 9837, 323 }, { 1822, 428 },
+			{ 6430, 607 }, { 2828, 552 }, { 10679, 356 }, { 7659, 243 }, { 7550, 178 }, { 5262, 328 }, { 6410, 515 },
+			{ 8586, 418 }, { 6523, 249 }, { 2682, 334 }, { 6907, 148 }, { 6523, 249 }, { 2682, 334 }, { 6908, 148 },
+			{ 2215, 214 }, { 4288, 355 }, { 4386, 388 }, { 4625, 316 }, { 5219, 206 }, };
+	private int[][] circulos = { { 2399, 149 }, { 3331, 188 }, { 4947, 556 }, { 9244, 178 }, { 8512, 215 },
+			{ 4419, 615 }, { 8739, 538 }, { 7117, 536 }, { 7214, 175 }, { 5113, 164 }, { 7374, 226 }, { 7219, 292 },
+			{ 9114, 475 }, { 9256, 158 }, { 4049, 289 }, { 5272, 358 }, { 1818, 281 }, { 3444, 583 }, { 10450, 231 },
+			{ 7139, 312 }, { 7924, 174 }, { 6215, 525 }, { 7431, 539 }, { 7670, 297 }, { 6821, 493 }, { 9078, 463 },
+			{ 6437, 444 }, { 9810, 532 }, { 3994, 445 }, { 9899, 171 }, { 10267, 242 }, { 4854, 587 }, { 3104, 524 },
+			{ 1400, 187 }, { 5107, 190 }, { 2494, 353 }, { 7127, 318 }, { 8759, 121 }, { 2607, 148 }, { 8631, 515 },
+			{ 5743, 476 }, { 9333, 373 }, { 5786, 319 }, { 9434, 439 }, { 9887, 309 }, { 6621, 259 }, { 3023, 422 }, };
+	private int[][] quadrado = { { 10357, 527 }, { 6347, 591 }, { 4756, 367 }, { 4076, 175 }, { 2432, 241 },
+			{ 2636, 192 }, { 5782, 393 }, { 5117, 326 }, { 2801, 372 }, { 4231, 173 }, { 7378, 491 }, { 3535, 230 },
+			{ 2235, 405 }, { 8282, 568 }, { 10187, 471 }, { 8005, 141 }, { 5281, 193 }, { 6991, 290 }, { 5717, 365 },
+			{ 1981, 271 }, { 6318, 396 }, { 9304, 570 }, { 2917, 218 }, { 2423, 203 }, { 6326, 471 }, { 2805, 607 },
+			{ 4102, 497 }, { 1475, 582 }, { 4784, 456 }, { 9712, 509 }, { 6201, 469 }, { 2654, 523 }, { 8349, 121 },
+			{ 10645, 566 }, { 7223, 312 }, { 9860, 429 }, { 6118, 487 }, { 6608, 132 }, { 1819, 436 }, { 2833, 476 },
+			{ 4093, 377 }, { 9609, 432 }, { 6606, 171 }, { 8083, 369 }, { 7334, 266 }, { 4502, 334 }, };
+	private static boolean emJogo;
+	private boolean passou;
+	private List<Triangulo> inimigos;
+	private List<Circulo> inimigos1;
+	private List<Quadrado> inimigos2;
+	private long init, fim, init1, fim1;
+	private boolean teste, teste2, teste4, gameover;
+	private boolean teste3 = true;
+	private boolean nivel1 = true;
+	private boolean nivel2 = false;
+	private boolean nivel3 = false;
+	int pontos = 0;
+
+	public static boolean isEmJogo() {
+		return emJogo;
+	}
+
+	public static void setEmJogo(boolean emJogo) {
+		fase.emJogo = emJogo;
+	}
+
+	public fase() {
+		setDoubleBuffered(true);
+		setFocusable(true);
+		addKeyListener(new TecladoAdapter());
+		ImageIcon referencia = new ImageIcon("res\\sky.gif");
+		ImageIcon referencia1 = new ImageIcon("res\\nivel1.gif");
+		ImageIcon referencia4 = new ImageIcon("res\\nivel2.gif");
+		fundo = referencia.getImage();
+		fundo1 = referencia1.getImage();
+		inicio = referencia4.getImage();
+		naves = new nave();
+		inicializaInimigos();
+		PlaySound p = new PlaySound();
+		p.playSound("res\\space.wav");
+		timer = new Timer(5, this);
+		timer.start();
+
+	}
+
+	public void inicializaInimigos() {
+
+		if (nivel <= 2) {
+			inimigos = new ArrayList<Triangulo>();
+			for (int i = 0; i <= 8; i++) {
+				inimigos.add(new Triangulo(triangulos[i][0], triangulos[i][1]));
+
+			}
+
+		}
+
+		inimigos1 = new ArrayList<Circulo>();
+		for (int i = 0; i < controle1; i++) {
+			inimigos1.add(new Circulo(circulos[i][0], circulos[i][1]));
+		}
+
+		if (nivel > 2) {
+			inimigos2 = new ArrayList<Quadrado>();
+			for (int i = 0; i < controle2; i++) {
+				inimigos2.add(new Quadrado(quadrado[i][0], quadrado[i][1]));
+			}
+
+		}
+
+	}
+
+	public void paint(Graphics g) {
+
+		Graphics2D graficos = (Graphics2D) g;
+
+		if (teste3 == true) {
+			if (nivel1 == true) {
+				graficos.drawImage(fundo1, 0, 0, null);
+				nivel1 = false;
+			}
+
+			if (nivel2 == true) {
+				setEmJogo(false);
+				graficos.drawImage(inicio, 0, 0, null);
+				nivel2 = false;
+
+			}
+
+			if (nivel3 == true) {
+				setEmJogo(false);
+				graficos.drawImage(fundo1, 0, 0, null);
+				nivel3 = false;
+
+			}
+
+			if (teste4 == false) {
+				init1 = System.currentTimeMillis();
+				teste4 = true;
+			}
+
+			if (teste4 == true) {
+				fim1 = System.currentTimeMillis();
+				if (fim1 - init1 >= 5000.0) {
+					//g.dispose();
+					setEmJogo(true);
+					teste3 = false;
+					teste4 = false;
+
+				} else {
+					fim1 = System.currentTimeMillis();
+				}
+
+			}
+		}
+
+		if (isEmJogo()) {
+			tocarMusica();
+			graficos.drawImage(fundo, 0, 0, null);
+			graficos.drawImage(naves.getImagem(), naves.getX(), naves.getY(), this);
+			List<missel> misseis = naves.getMisseis();
+
+			for (int i = 0; i < misseis.size(); i++) {
+				missel m = (missel) misseis.get(i);
+				graficos.drawImage(m.getImagem(), m.getX(), m.getY(), this);
+			}
+
+			if (nivel <= 2) {
+				for (int i = 0; i < inimigos.size(); i++) {
+					Triangulo in = inimigos.get(i);
+					graficos.drawImage(in.getImagem(), in.getX(), in.getY(), this);
+
+				}
+			}
+
+			for (int i = 0; i < inimigos1.size(); i++) {
+				Circulo in1 = inimigos1.get(i);
+				graficos.drawImage(in1.getImagem(), in1.getX(), in1.getY(), this);
+
+			}
+
+			if (nivel > 2) {
+				for (int i = 0; i < inimigos2.size(); i++) {
+					Quadrado in1 = inimigos2.get(i);
+					graficos.drawImage(in1.getImagem(), in1.getX(), in1.getY(), this);
+
+				}
+			}
+
+			graficos.setFont(new Font("DK Petit Four", Font.PLAIN, 60));
+			graficos.setColor(Color.BLACK);
+			graficos.drawString("PONTOS: " + pontos, 550, 50);
+			graficos.setFont(new Font("DK Petit Four", Font.PLAIN, 150));
+
+			/*
+			 * if (passou == true) {
+			 * 
+			 * graficos.setColor(Color.RED); graficos.drawString("NIVEL " +
+			 * nivel, 500, 350); teste = true; if (teste == true) {
+			 * 
+			 * if (teste2 == false) { init = System.currentTimeMillis(); teste2
+			 * = true; }
+			 * 
+			 * if (teste2 == true) { fim = System.currentTimeMillis(); if (fim -
+			 * init >= 3000.0) { g.dispose(); passou = false; teste = false;
+			 * teste2 = false;
+			 * 
+			 * } else { fim = System.currentTimeMillis(); }
+			 * 
+			 * } }
+			 * 
+			 * }
+			 */
+
+		} else if (gameover) {
+
+			// ImageIcon end = new ImageIcon("res\\gameover.jpg");
+			// graficos.drawImage(end.getImage(), 0, 0, null);
+
+			graficos.setFont(new Font("DK Petit Four", Font.PLAIN, 120));
+			graficos.setColor(Color.RED);
+			graficos.drawString("VOCE ACERTOU: " + pontos, 150, 300);
+
+		}
+
+		g.dispose();
+
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+
+		if ((inimigos.size() == 0) && (nivel <= 2)) {
+
+			nivel += 1;
+			controle += 1;
+			passou = true;
+			teste = true;
+			inicializaInimigos();
+		}
+		if ((inimigos1.size() == 0) && (nivel > 2 || nivel <= 6)) {
+
+			nivel += 1;
+			passou = true;
+			inicializaInimigos();
+
+		}
+
+		if (nivel >= 5) {
+			if (inimigos2.size() == 0) {
+				nivel += 1;
+				controle1 += 1;
+				controle += 1;
+				passou = true;
+				inicializaInimigos();
+			}
+
+		}
+
+		if ((nivel == 3) && (teste == true)) {
+			nivel2 = true;
+			teste3 = true;
+			teste = false;
+		}
+
+		if ((nivel == 5) && (teste == true)) {
+			nivel3 = true;
+			teste3 = true;
+			teste = false;
+		}
+
+		List<missel> misseis = naves.getMisseis();
+		for (int i = 0; i < misseis.size(); i++) {
+			missel m = (missel) misseis.get(i);
+			if (m.isVisivel()) {
+				m.mexer();
+			} else {
+				misseis.remove(i);
+			}
+
+		}
+
+		if (nivel <= 3) {
+			for (int i = 0; i < inimigos.size(); i++) {
+				Triangulo in = inimigos.get(i);
+				if (in.isVisivel()) {
+					in.mexer();
+				} else {
+					inimigos.remove(i);
+				}
+
+			}
+		}
+
+		for (int i = 0; i < inimigos1.size(); i++) {
+			Circulo in1 = inimigos1.get(i);
+			if (in1.isVisivel()) {
+				in1.mover();
+			} else {
+				inimigos1.remove(i);
+			}
+		}
+
+		if (nivel > 2) {
+			for (int i = 0; i < inimigos2.size(); i++) {
+				Quadrado in3 = inimigos2.get(i);
+				if (in3.isVisivel()) {
+					in3.mexer();
+				} else {
+					inimigos2.remove(i);
+				}
+			}
+
+		}
+
+		naves.mexer();
+		checarColisoes();
+		repaint();
+
+	}
+
+	public void tocarMusica() {
+
+		PlaySound p = new PlaySound();
+		// p.playSound("res\\space.wav");
+
+		if (nave.tiro == true) {
+
+			PlaySound c = new PlaySound();
+			c.playSound("res\\laser.wav");
+			nave.tiro = false;
+		}
+
+	}
+
+	public void checarColisoes() {
+		Rectangle formaNave = naves.getBounds();
+		Rectangle formaInimigo;
+		Rectangle formaMissel;
+		Rectangle formaCirculo;
+		Rectangle formaQuadrado;
+
+		if (nivel <= 2) {
+			for (int i = 0; i < inimigos.size(); i++) {
+				Triangulo tempInimigo = inimigos.get(i);
+				formaInimigo = tempInimigo.getBounds();
+
+				if (formaNave.intersects(formaInimigo)) {
+					naves.setVisivel(false);
+					tempInimigo.setVisivel(false);
+					setEmJogo(false);
+					gameover = true;
+				}
+			}
+		}
+
+		for (int i = 0; i < inimigos1.size(); i++) {
+			Circulo tempInimigo = inimigos1.get(i);
+			formaCirculo = tempInimigo.getBounds();
+
+			if (formaNave.intersects(formaCirculo)) {
+				naves.setVisivel(false);
+				tempInimigo.setVisivel(false);
+				setEmJogo(false);
+				gameover = true;
+			}
+		}
+
+		if (nivel > 2) {
+			for (int i = 0; i < inimigos2.size(); i++) {
+				Quadrado tempInimigo = inimigos2.get(i);
+				formaQuadrado = tempInimigo.getBounds();
+
+				if (formaNave.intersects(formaQuadrado)) {
+					naves.setVisivel(false);
+					tempInimigo.setVisivel(false);
+					setEmJogo(false);
+					gameover = true;
+				}
+			}
+		}
+
+		List<missel> misseis = naves.getMisseis();
+		for (int i = 0; i < misseis.size(); i++) {
+			missel tempMissel = misseis.get(i);
+			formaMissel = tempMissel.getBounds();
+
+			for (int j = 0; j < inimigos.size(); j++) {
+				Triangulo tempInimigo = inimigos.get(j);
+				formaInimigo = tempInimigo.getBounds();
+				if (formaMissel.intersects((formaInimigo))) {
+					if (nivel <= 3) {
+
+						tempInimigo.setVisivel(false);
+						tempMissel.setVisivel(false);
+
+						pontos += 1;
+					} else if (nivel > 3) {
+						tempInimigo.setVisivel(true);
+						tempMissel.setVisivel(true);
+					}
+
+				}
+			}
+
+			for (int j = 0; j < inimigos1.size(); j++) {
+				Circulo tempInimigo = inimigos1.get(j);
+				formaInimigo = tempInimigo.getBounds();
+				if (formaMissel.intersects((formaInimigo))) {
+
+					if ((nivel > 2) && (nivel < 6)) {
+						controle1 = 45;
+						controle2 = 5;
+						tempInimigo.setVisivel(false);
+						tempMissel.setVisivel(false);
+
+						pontos += 1;
+					} else if ((nivel <= 2) || (nivel >= 6)) {
+						tempInimigo.setVisivel(true);
+						tempMissel.setVisivel(true);
+					}
+
+				}
+
+			}
+
+			if (nivel > 2) {
+				for (int j = 0; j < inimigos2.size(); j++) {
+					Quadrado tempInimigo = inimigos2.get(j);
+					formaInimigo = tempInimigo.getBounds();
+					if (formaMissel.intersects((formaInimigo))) {
+						if (nivel >= 4) {
+							controle2 = 45;
+							controle1 = 5;
+							tempInimigo.setVisivel(false);
+							tempMissel.setVisivel(false);
+							pontos += 1;
+
+						} else if ((nivel > 2) && (nivel < 6)) {
+							tempInimigo.setVisivel(true);
+							tempMissel.setVisivel(true);
+
+						}
+
+					}
+
+				}
+			}
+
+		}
+	}
+
+	private class TecladoAdapter extends KeyAdapter {
+
+		@Override
+		public void keyPressed(KeyEvent e) {
+			naves.keyPressed(e);
+		}
+
+		@Override
+		public void keyReleased(KeyEvent e) {
+			naves.keyReleased(e);
+		}
+
+	}
+}

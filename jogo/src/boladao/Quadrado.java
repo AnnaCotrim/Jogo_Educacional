@@ -20,10 +20,11 @@ public class Quadrado {
 		this.x = x;
 		this.y = y;
 
-		if (fase.nivel > 3) {
+		if (fase.nivel > 2) {
 			ImageIcon referencia = new ImageIcon("res\\quadrado_vermelho.gif");
 			imagem = referencia.getImage();
-		} else if (fase.nivel > 6) {
+		} 
+		if (fase.nivel > 4) {
 			ImageIcon referencia = new ImageIcon("res\\quadrado_verde.gif");
 			imagem = referencia.getImage();
 		}
