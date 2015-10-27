@@ -98,16 +98,16 @@ public class fase extends JPanel implements ActionListener {
 		if (nivel <= 2)
 			controle1 = 2;
 		else if (nivel > 2 && nivel < 5) {
-			controle1 = 15;
+			controle1 = 10;
 			controle2 = 2;
 		} else if (nivel >= 5) {
 			controle1 = 2;
-			controle2 = 15;
+			controle2 = 10;
 		}
 
 		if (nivel <= 2) {
 			inimigos = new ArrayList<Triangulo>();
-			for (int i = 0; i <= 15; i++) {
+			for (int i = 0; i <= 5; i++) {
 				inimigos.add(new Triangulo(triangulos[i][0], triangulos[i][1]));
 
 			}
@@ -148,7 +148,7 @@ public class fase extends JPanel implements ActionListener {
 
 			if (nivel3 == true) {
 				setEmJogo(false);
-				graficos.drawImage(inicio, 0, 0, null);
+				graficos.drawImage(fundo1, 0, 0, null);
 				nivel3 = false;
 
 			}

@@ -20,10 +20,10 @@ public class Circulo {
 		this.y = y;
 
 		if (fase.nivel <= 3) {
-			ImageIcon referencia = new ImageIcon("res\\circulo_verde.gif");
+			ImageIcon referencia = new ImageIcon("res\\circulo_roxo.gif");
 			imagem = referencia.getImage();
 		} else if (fase.nivel > 3) {
-			ImageIcon referencia = new ImageIcon("res\\circulo_roxo.gif");
+			ImageIcon referencia = new ImageIcon("res\\circulo_verde.gif");
 			imagem = referencia.getImage();
 
 		}

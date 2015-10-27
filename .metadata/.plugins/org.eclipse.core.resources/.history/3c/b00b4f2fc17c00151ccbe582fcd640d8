@@ -13,17 +13,17 @@ public class Circulo {
 	private int largura, altura;
 	private boolean isVisivel;
 	private static final int LARGURA_TELA = 1200;
-	public static int VELOCIDADE = 1;
+	public static double VELOCIDADE = 0.5;
 
 	public Circulo(int x, int y) {
 		this.x = x;
 		this.y = y;
 
 		if (fase.nivel <= 3) {
-			ImageIcon referencia = new ImageIcon("res\\circulo_verde.gif");
+			ImageIcon referencia = new ImageIcon("res\\circulo_roxo.gif");
 			imagem = referencia.getImage();
 		} else if (fase.nivel > 3) {
-			ImageIcon referencia = new ImageIcon("res\\circulo_roxo.gif");
+			ImageIcon referencia = new ImageIcon("res\\circulo_verde.gif");
 			imagem = referencia.getImage();
 
 		}

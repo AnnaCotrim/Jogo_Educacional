@@ -148,7 +148,7 @@ public class fase extends JPanel implements ActionListener {
 
 			if (nivel3 == true) {
 				setEmJogo(false);
-				graficos.drawImage(inicio, 0, 0, null);
+				graficos.drawImage(fundo1, 0, 0, null);
 				nivel3 = false;
 
 			}
